@@ -29,7 +29,6 @@ final states = [
     'Missouri', 
     'Montana',
     'Nebraska', 
-    'Nevada', 
     'New Hampshire', 
     'New Jersey', 
     'New Mexico', 
@@ -58,6 +57,7 @@ class _HomePageState extends State<HomePage> {
   
 
   String _search = '';
+  int length = 0;
   @override
   Widget build(BuildContext context) {
     // Scaffold generates the material content,
@@ -92,35 +92,73 @@ class _HomePageState extends State<HomePage> {
                     decoration: InputDecoration(
                       hintText: 'Search',
                     ),
-                    onChanged: (value) {
-                      _search = value;
-                    }
-                    // onChanged: _search,
+                    onChanged: search,
                     // this adds all text inputed into a string variable
 
                 ),
               ),
-              
-              ListView.builder(
-                // shrinkWrap is important only when you put a listview, inside a scrollview
-                // you then want to set the physics of the listview to ScrollPhysics() so that
-                // it scrolls along with the scroll view, rather than seperate.
-                shrinkWrap: true,
-                physics: ScrollPhysics(),
-                itemCount: states.length,
-                itemBuilder: (context, index) {
-                  // Builders need returns
-                  return ListTile(
-                    // leading: #add icon here
-                    title: Center(
-                      child: Text(states[index], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)), 
-                    ),
-                    onTap: () {
-                      // enter functionality here
+              // Loads the search results
+              searchresult.length == 0
+                ? ListView.builder(
+                    // shrinkWrap is important only when you put a listview, inside a scrollview
+                    // you then want to set the physics of the listview to ScrollPhysics() so that
+                    // it scrolls along with the scroll view, rather than seperate.
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    itemCount: states.length,
+                    itemBuilder: (context, index) {
+                      // Builders need returns
+                      return ListTile(
+                        // leading: #add icon here
+                        title: Center(
+                          child: Text(states[index], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)), 
+                        ),
+                        onTap: () {
+                          // enter functionality here
+                        },
+                      );
                     },
-                  );
-                },
-              ),
+                  )
+                : ListView.builder(
+                    // shrinkWrap is important only when you put a listview, inside a scrollview
+                    // you then want to set the physics of the listview to ScrollPhysics() so that
+                    // it scrolls along with the scroll view, rather than seperate.
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    itemCount: searchresult.length,
+                    itemBuilder: (context, index) {
+                      // Builders need returns
+                      return ListTile(
+                        // leading: #add icon here
+                        title: Center(
+                          child: Text(searchresult[index], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)), 
+                        ),
+                        onTap: () {
+                          // enter functionality here
+                        },
+                      );
+                    },
+                  ),
+              // ListView.builder(
+              //   // shrinkWrap is important only when you put a listview, inside a scrollview
+              //   // you then want to set the physics of the listview to ScrollPhysics() so that
+              //   // it scrolls along with the scroll view, rather than seperate.
+              //   shrinkWrap: true,
+              //   physics: ScrollPhysics(),
+              //   itemCount: states.length,
+              //   itemBuilder: (context, index) {
+              //     // Builders need returns
+              //     return ListTile(
+              //       // leading: #add icon here
+              //       title: Center(
+              //         child: Text(states[index], style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)), 
+              //       ),
+              //       onTap: () {
+              //         // enter functionality here
+              //       },
+              //     );
+              //   },
+              // ),
             ],
           ),
         ),
@@ -129,15 +167,15 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// void _search(String searchText) {
-//   searchresult.clear(); //array
-//   for (int i = 0; i < states.length; i++) {
-//     String data = states[i];
-//     if(data.toLowerCase().contains(searchText.toLowerCase())) {
-//       searchresult.add(data);
-//     }
-//   }
-// }
+void search(String searchText) {
+  searchresult.clear(); //array
+  for (int i = 0; i < states.length; i++) {
+    String data = states[i];
+    if(data.toLowerCase().contains(searchText.toLowerCase())) {
+      searchresult.add(data);
+    }
+  }
+}
 
 //     return Scaffold(
 //       body: Center(
